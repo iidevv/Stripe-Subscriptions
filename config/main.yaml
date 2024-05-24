@@ -1,0 +1,15 @@
+version: 5.5.0.4
+type: common
+authorName: "Ilya I"
+moduleName: "StripeSubscriptions"
+description: "This module enables the management of recurring payment subscriptions."
+minorRequiredCoreVersion: 0
+dependsOn:
+  - QSL-MembershipProducts
+  - Qualiteam-SkinActSkin
+  - Qualiteam-SkinActXPaymentsConnector
+  - Qualiteam-SkinActXPaymentsSubscriptions
+  - XPay-XPaymentsCloud
+incompatibleWith: {}
+showSettingsForm: true
+canDisable: true

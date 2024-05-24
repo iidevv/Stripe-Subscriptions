@@ -1,0 +1,15 @@
+{%if this.isLogged() %}
+	<form action="/stripe-subscriptions" method="POST">
+		<input name="return_url" type="hidden" value="{{ this.getSubscriptionReturnUrl }}">
+		<button class="btn regular-button" type="submit">Get pro membership</button>
+	</form>
+{% else %}
+	<button class="btn regular-button popup-button popup-login" data-without-close="1">
+		{{ this.displayScriptData() }}
+		Sign in
+	</button>
+{% endif %}
+<form action="/stripe-account" method="POST">
+	<input name="return_url" type="hidden" value="{{ this.getSubscriptionReturnUrl }}">
+	<button class="btn regular-button" type="submit">Manage Billing</button>
+</form>
