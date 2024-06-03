@@ -6,16 +6,19 @@ use \XLite\Core\Config;
 use \Stripe\Stripe;
 use \Stripe\Checkout\Session as StripeSession;
 use \Stripe\BillingPortal\Session as StripeAccountSession;
+use XLite\Core\Database;
 
 class Session
 {
     protected $profile;
     protected $returnUrl;
+    protected $successUrl;
 
-    public function __construct(\XLite\Model\Profile $profile, string $returnUrl = '')
+    public function __construct(\XLite\Model\Profile $profile, string $returnUrl = '', $successUrl = '')
     {
         $this->profile = $profile;
         $this->returnUrl = $returnUrl;
+        $this->successUrl = $successUrl;
     }
     protected function getApiKey()
     {
@@ -31,11 +34,14 @@ class Session
     {
         $this->setApiKey();
 
-        $email = $this->profile->getLogin();
+        $subscription = Database::getRepo('Iidev\StripeSubscriptions\Model\StripeSubscriptions')->findOneBy([
+            'customerId' => $this->profile->getProfileId()
+        ]);
         $returnUrl = $this->returnUrl;
+        $successUrl = $this->successUrl;
 
-        return StripeSession::create([
-            'success_url' => $returnUrl,
+        $data = [
+            'success_url' => $successUrl,
             'cancel_url' => $returnUrl,
             'mode' => 'subscription',
             'line_items' => [
@@ -44,19 +50,34 @@ class Session
                     'quantity' => 1,
                 ]
             ],
-            'customer_email' => $email,
-        ]);
+            // 'subscription_data' => [
+            //     'trial_end' => 1734163778
+            // ]
+        ];
+
+        if ($subscription && $subscription->getStripeCustomerId()) {
+            $data['customer'] = $subscription->getStripeCustomerId();
+        } else {
+            $data['customer_email'] = $this->profile->getLogin();
+        }
+
+        return StripeSession::create($data);
     }
 
     public function createAccountSession()
     {
         $this->setApiKey();
-
-        $email = $this->profile->getLogin();
         $returnUrl = $this->returnUrl;
 
+        $profileId = $this->profile->getProfileId();
+
+        /** @var \Iidev\StripeSubscriptions\Model\StripeSubscriptions $subscription */
+        $subscription = Database::getRepo('Iidev\StripeSubscriptions\Model\StripeSubscriptions')->findOneBy([
+            'customerId' => $profileId
+        ]);
+
         return StripeAccountSession::create([
-            'customer' => 'cus_QANaSBazQtuonC',
+            'customer' => $subscription->getStripeCustomerId(),
             'return_url' => $returnUrl,
         ]);
     }

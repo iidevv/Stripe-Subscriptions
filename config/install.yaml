@@ -20,7 +20,52 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: "Secret key"
-        
-controller:
-  api:
-    - XLite\Module\Iidev\StripeSubscriptions\Controller\API\StripeWebhookController
+  - name: webhook_secret
+    category: Iidev\StripeSubscriptions
+    type: text
+    orderby: 1300
+    translations:
+      - code: en
+        option_name: "Webhook secret"
+  - name: stripe_sep_2
+    category: Iidev\StripeSubscriptions
+    type: separator
+    orderby: 1400
+    translations:
+      - code: en
+        option_name: "Page content"
+  - name: image_url
+    category: Iidev\StripeSubscriptions
+    type: text
+    orderby: 1450
+    translations:
+      - code: en
+        option_name: 'Image url'
+  - name: title
+    category: Iidev\StripeSubscriptions
+    type: text
+    orderby: 1500
+    translations:
+      - code: en
+        option_name: "Title"
+  - name: price
+    category: Iidev\StripeSubscriptions
+    type: text
+    orderby: 1600
+    translations:
+      - code: en
+        option_name: "Price"
+  - name: short_description
+    category: Iidev\StripeSubscriptions
+    type: 'XLite\View\FormField\Textarea\Simple'
+    orderby: 1700
+    translations:
+      - code: en
+        option_name: 'Short description'
+  - name: description
+    category: Iidev\StripeSubscriptions
+    type: 'XLite\View\FormField\Textarea\Advanced'
+    orderby: 1800
+    translations:
+      - code: en
+        option_name: 'Description'

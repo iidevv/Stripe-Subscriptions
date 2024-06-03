@@ -2,22 +2,64 @@
 
 namespace Iidev\StripeSubscriptions\Controller\Customer;
 
+use \XLite\Core\Config;
+use XLite\Core\Database;
+
 class SubscriptionPage extends \XLite\Controller\Customer\ACustomer
 {
-
-    /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getImageUrl()
     {
-        return static::t('Pro membership');
+        return Config::getInstance()->Iidev->StripeSubscriptions->image_url;
+    }
+    public function getPageTitle()
+    {
+        return Config::getInstance()->Iidev->StripeSubscriptions->title;
     }
 
+    public function getPrice()
+    {
+        return Config::getInstance()->Iidev->StripeSubscriptions->price;
+    }
+
+    public function getShortDescription()
+    {
+        return Config::getInstance()->Iidev->StripeSubscriptions->short_description;
+    }
+
+    public function getDescription()
+    {
+        return Config::getInstance()->Iidev->StripeSubscriptions->description;
+    }
+
+    public function getExpirationDate() {
+        $profile = $this->getProfile();
+        $subscription = Database::getRepo('Iidev\StripeSubscriptions\Model\StripeSubscriptions')->findOneBy([
+            'customerId' => $profile->getProfileId()
+        ]);
+        return date('F d, Y', $subscription->getExpirationDate());
+    }
+    public function getStatus() {
+        $profile = $this->getProfile();
+        $subscription = Database::getRepo('Iidev\StripeSubscriptions\Model\StripeSubscriptions')->findOneBy([
+            'customerId' => $profile->getProfileId()
+        ]);
+        return $subscription->getStatus();
+    }
+
+    public function isSubscriptionExist() {
+        $profile = $this->getProfile();
+        return Database::getRepo('Iidev\StripeSubscriptions\Model\StripeSubscriptions')->findOneBy([
+            'customerId' => $profile->getProfileId()
+        ]);
+    }
     public function isLogged()
     {
         return \XLite\Core\Auth::getInstance()->isLogged();
+    }
+
+    public function getSubscriptionSuccessUrl()
+    {
+        return $this->buildURL()."subscription-activation";
     }
 
     public function getSubscriptionReturnUrl()

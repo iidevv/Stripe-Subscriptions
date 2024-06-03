@@ -1,0 +1,9 @@
+#
+# Module services
+#
+
+x_cart:
+  clean_urls:
+    aliases:
+      subscription_page: professional-membership-pro-member.html
+      activation_page: subscription-activation
