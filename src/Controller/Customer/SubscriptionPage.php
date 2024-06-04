@@ -57,16 +57,6 @@ class SubscriptionPage extends \XLite\Controller\Customer\ACustomer
         return \XLite\Core\Auth::getInstance()->isLogged();
     }
 
-    public function getSubscriptionSuccessUrl()
-    {
-        return $this->buildURL()."subscription-activation";
-    }
-
-    public function getSubscriptionReturnUrl()
-    {
-        return \XLite::getController()->getURL();
-    }
-
     public function displayScriptData()
     {
         $data = [

@@ -40,7 +40,7 @@
 		<p>{{t('Your subscription is now active and ready to go.')}}</p>
 		<div class="subscription-controls">
 			{% if not this.isCartEmpty() %}
-				<a class="btn regular-button regular-main-button" href="/?target=checkout">{{t('Checkout')}}</a>
+				<a class="btn regular-button regular-main-button" href="/?target=checkout">{{t('Continue checkout')}}</a>
 			{% else %}
 				<a class="btn regular-button regular-main-button" href="/?target=subscription_page">{{t('Manage Subscription')}}</a>
 			{% endif %}

@@ -57,6 +57,12 @@ class HookManager
         $profileId = $subscription->getCustomerId();
         $profile = Database::getRepo('XLite\Model\Profile')->find($profileId);
 
+        if ($profile && $profile->isMembershipMigrationProfile()) {
+            $profile->setMembershipMigrationProfileComplete();
+            Database::getEM()->persist($profile);
+            Database::getEM()->flush();
+        }
+
         if ($profile) {
             $this->setProMembership($profile, $status);
         } else {
@@ -107,7 +113,7 @@ class HookManager
             /** @var \XLite\Model\Membership $membership */
             $membership = Database::getRepo(\XLite\Model\Membership::class)
                 ->find(11);
-                $membership->getLabelId();
+            $membership->getLabelId();
         }
 
         $profile->setMembership($membership);

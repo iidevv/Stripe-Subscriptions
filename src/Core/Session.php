@@ -8,8 +8,11 @@ use \Stripe\Checkout\Session as StripeSession;
 use \Stripe\BillingPortal\Session as StripeAccountSession;
 use XLite\Core\Database;
 
+use XLite\InjectLoggerTrait;
+
 class Session
 {
+    use InjectLoggerTrait;
     protected $profile;
     protected $returnUrl;
     protected $successUrl;
@@ -30,6 +33,20 @@ class Session
         Stripe::setApiKey($this->getApiKey());
     }
 
+
+    /**
+     * @param string $customerId The Stripe Customer ID.
+     * @return \Stripe\Customer|null Returns the customer object or null if not found.
+     */
+    public function retrieveCustomer($customerId)
+    {
+        try {
+            return \Stripe\Customer::retrieve($customerId);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            $this->getLogger("StripeSubscriptions")->error('Stripe\Customer: ' . $e->getMessage());
+            return null;
+        }
+    }
     public function createSession()
     {
         $this->setApiKey();
@@ -49,13 +66,18 @@ class Session
                     'price' => 'price_1PC7iKRp9qylIqdZAFDLddbH',
                     'quantity' => 1,
                 ]
-            ],
-            // 'subscription_data' => [
-            //     'trial_end' => 1734163778
-            // ]
+            ]
         ];
 
-        if ($subscription && $subscription->getStripeCustomerId()) {
+        if ($this->profile->isMembershipMigrationProfile()) {
+            $data['subscription_data'] = [
+                'trial_end' => $this->profile->getMembershipMigrationProfileExpirationDate() + 5256000
+            ];
+        }
+        
+        $stripeCustomer = ($subscription && $subscription->getStripeCustomerId()) ? $this->retrieveCustomer($subscription->getStripeCustomerId()) : null;
+
+        if ($subscription && $subscription->getStripeCustomerId() && $stripeCustomer && !$stripeCustomer['deleted']) {
             $data['customer'] = $subscription->getStripeCustomerId();
         } else {
             $data['customer_email'] = $this->profile->getLogin();
