@@ -5,5 +5,5 @@
 x_cart:
   clean_urls:
     aliases:
-      subscription_page: professional-membership-pro-member.html
+      subscription_page: Professional-Membership-Pro-Member.html
       activation_page: subscription-activation

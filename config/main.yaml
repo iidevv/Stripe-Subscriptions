@@ -7,9 +7,6 @@ minorRequiredCoreVersion: 0
 dependsOn:
   - QSL-MembershipProducts
   - Qualiteam-SkinActSkin
-  - Qualiteam-SkinActXPaymentsConnector
-  - Qualiteam-SkinActXPaymentsSubscriptions
-  - XPay-XPaymentsCloud
 incompatibleWith: {}
 showSettingsForm: true
 canDisable: true

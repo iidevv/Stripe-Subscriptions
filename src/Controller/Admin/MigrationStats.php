@@ -17,9 +17,9 @@ class MigrationStats extends \XLite\Controller\Admin\AAdmin
     {
         $queryBuilder = Database::getRepo('Iidev\StripeSubscriptions\Model\MembershipMigrate')->createQueryBuilder('m');
         $queryBuilder->where('m.paid_membershipid = :paid_membershipid')
-            ->andWhere('m.status != :status')
+            ->andWhere('m.status = :status')
             ->setParameter('paid_membershipid', 9)
-            ->setParameter('status', '');
+            ->setParameter('status', 'MIGRATION_COMPLETE');
             
         $subscriptions = $queryBuilder->getQuery()->getResult();
         return count($subscriptions);
