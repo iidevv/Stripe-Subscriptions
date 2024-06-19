@@ -1,13 +1,16 @@
 <?php
 
+/**
+ * Copyright (c) 2011-present Qualiteam software Ltd. All rights reserved.
+ * See https://www.x-cart.com/license-agreement.html for license details.
+ */
+
 namespace Iidev\StripeSubscriptions\Model;
 
 use XLite\Core\Database;
 use XCart\Extender\Mapping\Extender;
 
 /**
- * XPayments payment processor
- *
  * @Extender\Mixin
  */
 class Profile extends \XLite\Model\Profile
@@ -24,7 +27,7 @@ class Profile extends \XLite\Model\Profile
             'login' => $login
         ]);
 
-        if ($preProfile && $preProfile->getPaidMembershipId() === 9 && $preProfile->getStatus() === '') {
+        if ($preProfile && $preProfile->getMembershipId() === 9 && $preProfile->getStatus() === '') {
             $isMembershipMigrationProfile = true;
         }
 
