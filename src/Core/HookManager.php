@@ -106,7 +106,7 @@ class HookManager
         return $subscription;
     }
 
-    private function setProMembership(Profile $profile, string $status): void
+    public function setProMembership(Profile $profile, string $status): void
     {
         $membership = null;
 
