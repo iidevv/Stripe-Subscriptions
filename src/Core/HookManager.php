@@ -14,7 +14,7 @@ class HookManager
 
     public function handleSubscription(string $event, array $data)
     {
-        $this->getLogger("StripeSubscriptions")->error('Event: ' . $event . '. Data: ' . json_encode($data));
+        $this->getLogger("StripeSubscriptions")->debug('Event: ' . $event . '. Data: ' . json_encode($data));
 
         switch ($event) {
             case 'customer.subscription.created':
