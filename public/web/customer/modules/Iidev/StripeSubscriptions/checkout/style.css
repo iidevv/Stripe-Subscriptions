@@ -118,6 +118,14 @@
   margin: 0 auto;
 }
 
+form.subscription-checkout__form {
+  padding: 0;
+}
+
+.subscription-checkout .btn {
+  margin-top: 20px;
+}
+
 ol.subscription-text-2 {
   list-style-type: decimal;
   margin: 0 0 0 15px;

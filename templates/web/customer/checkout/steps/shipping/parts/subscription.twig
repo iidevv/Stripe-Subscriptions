@@ -10,11 +10,18 @@
 			<span>
 				<strong>{{t('Free Shipping')}}</strong><br>{{t('Only $99/year')}}<b>{{t('*U.S. mainland only')}}</b>
 			</span>
-			<form action="/stripe-subscriptions" method="POST">
-				<input name="return_url" type="hidden" value="{{ this.getSubscriptionReturnUrl }}">
-				<input name="success_url" type="hidden" value="{{this.getSubscriptionSuccessUrl()}}">
-				<button class="btn regular-button regular-main-button" type="submit">{{t('Get Now')}}</button>
-			</form>
+			{% if this.isAuthorized() %}
+				<form class="subscription-checkout__form" action="/stripe-subscriptions" method="POST">
+					<input name="return_url" type="hidden" value="{{ this.getSubscriptionReturnUrl }}">
+					<input name="success_url" type="hidden" value="{{this.getSubscriptionSuccessUrl()}}">
+					<button class="btn regular-button regular-main-button" type="submit">{{t('Get Now')}}</button>
+				</form>
+			{% else %}
+				<button class="btn regular-button regular-main-button popup-button popup-login" data-without-close="1">
+					{{ this.displayScriptData() }}
+					Get Now
+				</button>
+			{% endif %}
 		</div>
 		<span class="subscription-option-label">Or</span>
 		<div class="subscription-box">
