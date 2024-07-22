@@ -27,7 +27,7 @@ class Profile extends \XLite\Model\Profile
             'login' => $login
         ]);
 
-        if ($preProfile && $preProfile->getMembershipId() === 9 && $preProfile->getStatus() === '') {
+        if ($preProfile && $preProfile->getMembershipId() === 9 && $preProfile->getStatus() !== "MIGRATION_COMPLETE" && $preProfile->getPaidMembershipExpire() > time()) {
             $isMembershipMigrationProfile = true;
         }
 
