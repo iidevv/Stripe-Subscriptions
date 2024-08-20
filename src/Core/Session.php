@@ -63,7 +63,7 @@ class Session
             'mode' => 'subscription',
             'line_items' => [
                 [
-                    'price' => 'price_1PC7iKRp9qylIqdZAFDLddbH',
+                    'price' => Config::getInstance()->Iidev->StripeSubscriptions->price_id,
                     'quantity' => 1,
                 ]
             ]

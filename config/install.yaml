@@ -27,6 +27,13 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: "Webhook secret"
+  - name: price_id
+    category: Iidev\StripeSubscriptions
+    type: text
+    orderby: 1330
+    translations:
+      - code: en
+        option_name: "price ID"
   - name: membership_id
     category: Iidev\StripeSubscriptions
     type: text
