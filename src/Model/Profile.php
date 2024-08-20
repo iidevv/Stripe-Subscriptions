@@ -24,7 +24,8 @@ class Profile extends \XLite\Model\Profile
 
         /** @var \Iidev\StripeSubscriptions\Model\MembershipMigrate $preProfile */
         $preProfile = Database::getRepo('Iidev\StripeSubscriptions\Model\MembershipMigrate')->findOneBy([
-            'login' => $login
+            'login' => $login,
+            'membershipid' => 9
         ]);
 
         if ($preProfile && $preProfile->getMembershipId() === 9 && $preProfile->getStatus() !== "MIGRATION_COMPLETE" && $preProfile->getPaidMembershipExpire() > time()) {
@@ -42,7 +43,8 @@ class Profile extends \XLite\Model\Profile
 
         /** @var \Iidev\StripeSubscriptions\Model\MembershipMigrate $preProfile */
         $preProfile = Database::getRepo('Iidev\StripeSubscriptions\Model\MembershipMigrate')->findOneBy([
-            'login' => $login
+            'login' => $login,
+            'membershipid' => 9
         ]);
 
         $preProfile->setStatus("MIGRATION_COMPLETE");
@@ -59,7 +61,8 @@ class Profile extends \XLite\Model\Profile
 
         /** @var \Iidev\StripeSubscriptions\Model\MembershipMigrate $preProfile */
         $preProfile = Database::getRepo('Iidev\StripeSubscriptions\Model\MembershipMigrate')->findOneBy([
-            'login' => $login
+            'login' => $login,
+            'membershipid' => 9
         ]);
 
         return $preProfile->getPaidMembershipExpire();
