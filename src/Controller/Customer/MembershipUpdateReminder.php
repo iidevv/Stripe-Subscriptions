@@ -33,8 +33,8 @@ class MembershipUpdateReminder extends \XLite\Controller\Customer\ACustomer
     }
     public function showMessageForPromembers()
     {
-        $message = '<b>Action Required: </b>Update your Pro Membership!<br>';
-        $description = 'Update your payment details and get <b>+2 months</b> free on our new platform. '.$this->getSubscriptionButton().'';
+        $message = '<b>Action Needed: </b>Update Your Pro Membership Payment!<br>';
+        $description = 'This isn’t a charge—simply update your info in the new portal. No payment until renewal, plus enjoy an extra 2 months free when your current plan ends! '.$this->getSubscriptionButton().'';
         \XLite\Core\TopMessage::getInstance()->addInfo($message . ' ' . $description);
     }
 
