@@ -50,6 +50,17 @@ class StripeSubscription extends \XLite\Controller\Customer\ACustomer
         }
         return false;
     }
+
+    public function isAddressCompleted()
+    {
+        $profile = $this->getProfile();
+
+        return $profile
+            && $profile->getShippingAddress()
+            && $profile->getShippingAddress()
+                ->isCompleted(\XLite\Model\Address::SHIPPING);
+    }
+
     public function getImageUrl()
     {
         return Config::getInstance()->Iidev->StripeSubscriptions->image_url;

@@ -3,7 +3,7 @@
  #
  # @ListChild(list="chechout.shipping.selected.sub.payment.shipping.methods.after", zone="customer", weight=200)
  #}
-{% if not this.isProMembership() %}
+{% if not this.isProMembership() and this.isAddressCompleted() %}
 	<div class="subscription-checkout">
 		<img src="{{ this.getImageUrl() }}" alt="subscription-logo">
 		<div class="subscription-checkout__label">
